@@ -15,26 +15,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import gtk
-import pynotify
 import sys
 import os
 from os import *
 import os.path
 from os.path import *
 import argparse
-import gio
 import subprocess
 from subprocess import call, check_output
+
+import notify2
+from notify2 import *
+
+import gtk
+
+from dbus.mainloop.glib import DBusGMainLoop
+
 
 class MountDevice:
 
     def __init__(self, device, label):
         self.device = device
         self.label = label
-        pynotify.init("Notification-mount")
-        n = pynotify.Notification("Device Detected", device + ": " + label + "\nDo you want to mount it?", "drive-removable-media-usb-pendrive")
-        n.set_urgency(pynotify.URGENCY_NORMAL)
+        notify2.init("Notification-Mount", DBusGMainLoop())
+        n = Notification("Device Detected", device + ": " + label + "\nDo you want to mount it?", "drive-removable-media-usb-pendrive")
+        n.set_urgency(notify2.URGENCY_NORMAL)
         n.add_action("action_mount", "Mount", self.mount)
         n.add_action("action_dismiss", "Dismiss", self.close)
         n.show()
