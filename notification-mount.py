@@ -54,23 +54,27 @@ class MountDevice:
         notifyObj.close()
         gtk.main_quit()
 
+
 def getLabel(label, device):
     if label.strip() != "":
         return label
 
-    labelPath = "/dev/disk/by-label"
-    labels = [f for f in listdir(labelPath) if islink(join(labelPath, f))]
+    dirs = ["/dev/disk/by-label", "/dev/disk/by-uuid", "/dev/disk/by-id"]
 
-    for label in labels:
-        if realpath(join(labelPath, label)) == device:
-            return label
+    for directory in dirs:
+        label = findSymlinkInDir(device, directory)
+        if label != "" and label != None:
+            break
 
-    uuidPath = "/dev/disk/by-uuid"
-    uuids = [f for f in listdir(uuidPath) if islink(join(uuidPath, f))]
+    return label
 
-    for uuid in uuids:
-        if realpath(join(uuidPath, uuid)) == device:
-            return uuid
+def findSymlinkInDir(needle, directory):
+    for f in listdir(directory):
+        path = join(directory, f)
+        if islink(path) and realpath(path) == needle:
+            return f
+
+    return None
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -78,6 +82,7 @@ if __name__ == "__main__":
     parser.add_argument("--label", "-l", help="Label to use for the device. Defaults to volume label and if not set to UUID.", required=False, dest="label", default="")
 
     args = parser.parse_args()
+
 
     args.label = getLabel(args.label, args.device)
 
