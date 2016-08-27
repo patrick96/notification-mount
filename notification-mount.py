@@ -15,6 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+from __future__ import print_function
+
 import sys
 import os
 from os import *
@@ -23,6 +25,7 @@ from os.path import *
 import argparse
 import subprocess
 from subprocess import call, check_output
+import re
 
 import notify2
 from notify2 import *
@@ -30,7 +33,6 @@ from notify2 import *
 import gtk
 
 from dbus.mainloop.glib import DBusGMainLoop
-
 
 class MountDevice:
 
@@ -54,6 +56,12 @@ class MountDevice:
         notifyObj.close()
         gtk.main_quit()
 
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+def isValid(device):
+    exp = re.compile("^\/dev\/[a-z]d[a-z]+[0-9]+$")
+    return exp.match(device)
 
 def getLabel(label, device):
     if label.strip() != "":
@@ -83,6 +91,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    if not isValid(args.device):
+        eprint("Device " + args.device + " is not a partition")
+        quit()
 
     args.label = getLabel(args.label, args.device)
 
