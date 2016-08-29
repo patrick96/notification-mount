@@ -1,0 +1,9 @@
+[Unit]
+Description=Notification when new block device is detected with button to mount
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/devmon --no-mount --no-unmount --exec-on-drive "notification-mount.py -d %%f"
+
+[Install]
+WantedBy=default.target
