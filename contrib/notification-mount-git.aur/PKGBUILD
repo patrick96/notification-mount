@@ -1,0 +1,32 @@
+_pkgname="notification-mount"
+pkgname="${_pkgname}-git"
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Script to show notification for a block device with mount option"
+arch=('any')
+url="https://github.com/patrick96/notification-mount"
+license=('GPL3')
+depends=('python3' 'python-gobject' 'python-notify2' 'udevil')
+provides=('notification-mount')
+conflicts=('notification-mount')
+source=("${_pkgname}::git+${url}.git")
+md5sums=("SKIP")
+
+pkgver() {
+  cd "$_pkgname" || exit
+    git describe --long --tags | sed 's/^v//g'  | sed 's/-/./g'
+}
+
+package() {
+    cd "$srcdir/$_pkgname" || exit
+
+    install -D -m755 "./notification-mount.py" "$pkgdir/usr/bin/notification-mount.py"
+    ln -s "notification-mount.py" "$pkgdir/usr/bin/notification-mount"
+
+    for _f in "./examples/*"
+    do
+        install -D -m644 $_f "$pkgdir/usr/share/$_pkgname/examples/$(basename $_f)"
+    done
+
+    install -D -m644 ./examples/notification-mount.service "$pkgdir/usr/lib/systemd/user/notification-mount.service"
+}
