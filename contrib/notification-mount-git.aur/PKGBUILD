@@ -2,7 +2,7 @@
 # Contributor: Patrick Ziegler <p.ziegler96@gmail.com>
 _pkgname="notification-mount"
 pkgname="${_pkgname}-git"
-pkgver=0.1.0
+pkgver=0.2.0
 pkgrel=1
 pkgdesc="Script to show notification for a block device with mount option"
 arch=('any')
