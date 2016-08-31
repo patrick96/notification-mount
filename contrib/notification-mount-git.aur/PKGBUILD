@@ -31,5 +31,6 @@ package() {
         install -D -m644 $_f "$pkgdir/usr/share/$_pkgname/examples/$(basename $_f)"
     done
 
-    install -D -m644 ./examples/notification-mount.service "$pkgdir/usr/lib/systemd/user/notification-mount.service"
+    install -D -m644 ./examples/notification-mount.service \
+        "$pkgdir/usr/lib/systemd/user/notification-mount.service"
 }
