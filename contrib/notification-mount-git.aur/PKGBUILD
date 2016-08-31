@@ -1,3 +1,5 @@
+# Maintainer: Patrick Ziegler <p.ziegler96@gmail.com>
+# Contributor: Patrick Ziegler <p.ziegler96@gmail.com>
 _pkgname="notification-mount"
 pkgname="${_pkgname}-git"
 pkgver=0.1.0
