@@ -9,6 +9,7 @@ arch=('any')
 url="https://github.com/patrick96/notification-mount"
 license=('GPL3')
 depends=('python3' 'python-gobject' 'python-notify2' 'udevil')
+makedepends=('git')
 provides=('notification-mount')
 conflicts=('notification-mount')
 source=("${_pkgname}::git+${url}.git")
