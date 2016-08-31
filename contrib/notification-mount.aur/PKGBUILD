@@ -1,0 +1,29 @@
+# Maintainer: Patrick Ziegler <p.ziegler96@gmail.com>
+# Contributor: Patrick Ziegler <p.ziegler96@gmail.com>
+pkgname="notification-mount"
+pkgver=0.2.0
+pkgrel=1
+pkgdesc="Script to show notification for a block device with mount option"
+arch=('any')
+url="https://github.com/patrick96/notification-mount"
+license=('GPL3')
+depends=('python3' 'python-gobject' 'python-notify2' 'udevil')
+makedepends=('git')
+provides=('notification-mount')
+conflicts=('notification-mount')
+source=("${pkgname}::git+${url}.git#tag=v${pkgver}")
+md5sums=("SKIP")
+
+package() {
+    cd "$srcdir/$pkgname" || exit
+
+    install -D -m755 "./notification-mount.py" "$pkgdir/usr/bin/notification-mount.py"
+    ln -s "notification-mount.py" "$pkgdir/usr/bin/notification-mount"
+
+    for _f in "./examples/*"
+    do
+        install -D -m644 $_f "$pkgdir/usr/share/$_pkgname/examples/$(basename $_f)"
+    done
+
+    install -D -m644 ./examples/notification-mount.service "$pkgdir/usr/lib/systemd/user/notification-mount.service"
+}
