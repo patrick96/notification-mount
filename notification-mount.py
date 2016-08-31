@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 
 # Copyright 2016 Patrick Ziegler
 #
@@ -15,8 +15,6 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from __future__ import print_function
-
 import sys
 import os
 from os import *
@@ -30,7 +28,9 @@ import re
 import notify2
 from notify2 import *
 
-import gtk
+import gi
+gi.require_version('Gtk', '3.0')
+from gi.repository import Gtk
 
 from dbus.mainloop.glib import DBusGMainLoop
 
@@ -45,8 +45,8 @@ class MountDevice:
         n.add_action("action_mount", "Mount", self.mount)
         n.add_action("action_dismiss", "Dismiss", self.close)
         n.show()
-        n.connect("closed", gtk.main_quit)
-        gtk.main()
+        n.connect("closed", Gtk.main_quit)
+        Gtk.main()
 
     def mount(self, notifyObj, action):
         call(["udevil", "mount", self.device])
@@ -54,7 +54,7 @@ class MountDevice:
 
     def close(self, notifyObj, action):
         notifyObj.close()
-        gtk.main_quit()
+        Gtk.main_quit()
 
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
