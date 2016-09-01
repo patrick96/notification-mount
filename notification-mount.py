@@ -40,7 +40,10 @@ class MountDevice:
         self.device = device
         self.label = label
         notify2.init("Notification-Mount", DBusGMainLoop())
-        n = Notification("Device Detected", device + ": " + label + "\nDo you want to mount it?", "drive-removable-media-usb-pendrive")
+        # Alternate icons:
+        # drive-removable-media-usb-pendrive
+        # device-notifier
+        n = Notification("Device Detected", device + ": " + label + "\nDo you want to mount it?", "media-removable")
         n.set_urgency(notify2.URGENCY_NORMAL)
 
         if "actions" in notify2.get_server_caps():
@@ -60,10 +63,15 @@ class MountDevice:
 
         if returncode == 0:
             summary = "Success"
-            icon = "security-high"
+            # Alternate icons:
+            # security-high
+            icon = "gtk-apply"
         else:
             summary = "Error"
-            icon = "security-low"
+            # Alternate icons:
+            # security-low
+            # gtk-dialog-warning
+            icon = "gtk-dialog-error"
 
         n = Notification(summary, output, icon)
         n.update(summary, message=output, icon=icon)
