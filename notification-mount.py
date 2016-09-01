@@ -42,8 +42,12 @@ class MountDevice:
         notify2.init("Notification-Mount", DBusGMainLoop())
         n = Notification("Device Detected", device + ": " + label + "\nDo you want to mount it?", "drive-removable-media-usb-pendrive")
         n.set_urgency(notify2.URGENCY_NORMAL)
-        n.add_action("action_mount", "Mount", self.mount)
-        n.add_action("action_dismiss", "Dismiss", self.close)
+
+        if "actions" in notify2.get_server_caps():
+            n.add_action("action_mount", "Mount", self.mount)
+        else:
+            eprint("Your Notification server does not support buttons.")
+
         n.show()
         n.connect("closed", Gtk.main_quit)
         Gtk.main()
