@@ -53,8 +53,22 @@ class MountDevice:
         Gtk.main()
 
     def mount(self, notifyObj, action):
-        call(["udevil", "mount", self.device])
+        p = subprocess.run("udevil mount " + self.device, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+        output = p.stdout.decode("utf8")
+        returncode = p.returncode
         self.close(notifyObj, action)
+
+        if returncode == 0:
+            summary = "Success"
+            icon = "security-high"
+        else:
+            summary = "Error"
+            icon = "security-low"
+
+        n = Notification(summary, output, icon)
+        n.update(summary, message=output, icon=icon)
+        n.show()
+
 
     def close(self, notifyObj, action):
         notifyObj.close()
