@@ -20,7 +20,7 @@ package() {
   ln -s "notification-mount.py" "$pkgdir/usr/bin/notification-mount"
   for _f in "./examples/*"
   do
-    install -D -m644 $_f "$pkgdir/usr/share/$_pkgname/examples/$(basename $_f)"
+    install -D -m644 $_f "$pkgdir/usr/share/$pkgname/examples/$(basename $_f)"
   done
   install -D -m644 ./examples/notification-mount.service \
     "$pkgdir/usr/lib/systemd/user/notification-mount.service"
