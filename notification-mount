@@ -20,6 +20,7 @@ import os
 from os import *
 import os.path
 from os.path import *
+import stat
 import argparse
 import subprocess
 from subprocess import call, check_output
@@ -86,6 +87,9 @@ def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 def isValid(device):
+    if not os.path.exists(device) or not stat.S_ISBLK(os.stat(device).st_mode):
+        return False
+
     exp = re.compile("^\/dev\/[a-z]d[a-z]+[0-9]+$")
     return exp.match(device)
 
