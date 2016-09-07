@@ -7,13 +7,13 @@ It might be wise to call the script from a listeners that fires every time a new
 As an example, if you have [udevil][udevil] installed, you can run the following script (as a service maybe?) and it will show a notification whenever a new device is detected:
 
 ```bash
-devmon --no-mount --no-unmount --exec-on-drive "./notification-mount.py -d %f"
+devmon --no-mount --no-unmount --exec-on-drive "./notification-mount -d %f"
 ```
 Note: You will need to change the path to the script, if you do not run `devmon` in the same folder as the script.
 
 
 ## Installation
-If you are not using **Arch** then you will need to copy or symlink the `notification-mount.py` file to somewhere that is in your `$PATH` (see below in the example for more info on the `PATH`).
+If you are not using **Arch** then you will need to copy or symlink the `notification-mount` file to somewhere that is in your `$PATH` (see below in the example for more info on the `PATH`).
 
 For how to install and start the system service see the [example](#systemd-unit) below.
 ### Arch Linux
@@ -42,12 +42,12 @@ Description=Notification when new block device is detected with button to mount
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/devmon --no-mount --no-unmount --exec-on-drive "notification-mount.py -d %%f"
+ExecStart=/usr/bin/devmon --no-mount --no-unmount --exec-on-drive "notification-mount -d %%f"
 
 [Install]
 WantedBy=default.target
 ```
-Fot this you will need to have the `notification-mount.py` in a folder that is part of the `$PATH`
+Fot this you will need to have the `notification-mount` in a folder that is part of the `$PATH`
 
 **Note:** This should be the default `$PATH`. Alternatively you can set your modified `PATH` on the systemd environment like described [here](https://wiki.archlinux.org/index.php/Systemd/User#PATH). 
 
