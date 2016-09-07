@@ -15,7 +15,7 @@ source=("${pkgname}::git+${url}.git#tag=v${pkgver}")
 md5sums=("SKIP")
 
 package() {
-  cd "$srcdir/$pkgname" || exit
+  cd "$srcdir/$pkgname"
   install -D -m755 "./notification-mount" "$pkgdir/usr/bin/notification-mount"
   for _f in "./examples/*"
   do
