@@ -1,17 +1,16 @@
 # Maintainer: Patrick Ziegler <p.ziegler96 at gmail dot com>
-# Contributor: Patrick Ziegler <p.ziegler96 at gmail dot com>
 _pkgname="notification-mount"
 pkgname="${_pkgname}-git"
 pkgver=1.0.0
 pkgrel=1
 pkgdesc="Script to show notification for a block device with mount option"
 arch=('any')
-url="https://github.com/patrick96/notification-mount"
+url="https://github.com/patrick96/$_pkgname"
 license=('GPL3')
-depends=('python3' 'python-gobject' 'python-notify2' 'udevil')
+depends=('python' 'python-gobject' 'python-notify2' 'udevil')
 makedepends=('git')
-provides=('notification-mount')
-conflicts=('notification-mount')
+provides=("$_pkgname")
+conflicts=("$_pkgname")
 source=("${_pkgname}::git+${url}.git")
 md5sums=("SKIP")
 
