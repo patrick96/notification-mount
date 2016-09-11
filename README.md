@@ -1,21 +1,42 @@
+notification-mount
+==================
+
 ![GPL v3.0](https://img.shields.io/github/license/patrick96/notification-mount.svg)
 
-This script displays a notification for an unmounted drive with a button to mount it.
+This is a script that displays a notification for a drive with a button to mount it.
 
-It might be wise to call the script from a listeners that fires every time a new block device is detected.
+It might be wise to call the script from a listeners that fires every time a new block device is detected (see [examples](#examples)).
 
-As an example, if you have [udevil][udevil] installed, you can run the following script (as a service maybe?) and it will show a notification whenever a new device is detected:
+Table of Contents
+=================
 
-```bash
-devmon --no-mount --no-unmount --exec-on-drive "./notification-mount -d %f"
-```
-Note: You will need to change the path to the script, if you do not run `devmon` in the same folder as the script.
+  * [notification-mount](#notification-mount)
+  * [Table of Contents](#table-of-contents)
+  * [Installation](#installation)
+    * [Requirements](#requirements)
+    * [Non-Arch Systems](#non-arch-systems)
+    * [Arch Linux](#arch-linux)
+  * [Examples](#examples)
+    * [Devmon Script](#devmon-script)
+    * [Systemd Unit](#systemd-unit)
 
-## Installation
-If you are not using **Arch** then you will need to copy or symlink the `notification-mount` file to somewhere that is in your `$PATH` (see below in the example for more info on the `PATH`).
+Installation
+============
+
+## Requirements
+* Linux
+* python3
+* [python-gobject](https://wiki.gnome.org/Projects/PyGObject)
+* [python-notify2](https://pypi.python.org/pypi/notify2)
+* [udevil][udevil]
+
+## Non-Arch Systems
+
+If you are not using **Arch**, then you will need to copy or symlink the `notification-mount` file to somewhere that is in your `PATH` (see below in the systemd example for more info on wĥat you need to pay attention to when placing it somewhere in the `PATH`).
 
 For how to install and start the system service see the [example](#systemd-unit) below.
-### Arch Linux
+
+## Arch Linux
 If you are using **Arch Linux** either install [notification-mount][notification-mount] or [notification-mount-git][notification-mount-git] from the AUR.
 You should now also have a user systemd service which you can enable and start like this:
 ```
@@ -23,16 +44,21 @@ systemctl --user enable notification-mount.service
 systemctl --user start notification-mount.service
 ```
 This service is the same as the one in the example below. 
-### Requirements
-* Linux
-* python3
-* [python-gobject](https://wiki.gnome.org/Projects/PyGObject)
-* [python-notify2](https://pypi.python.org/pypi/notify2)
-* [udevil][udevil]
 
-## Examples
-### Systemd Unit
-Systemd service using [udevil][udevil]:
+Examples
+========
+
+## Devmon Script
+If you have [udevil][udevil] installed, you can run the following script and it will show a notification whenever a new device is detected:
+
+```bash
+devmon --no-mount --no-unmount --exec-on-drive "./notification-mount -d %f" &
+```
+You could at this to your `.xinitrc` or any other script that runs whenever your system starts up.
+
+You may need to change the path to the script depending on where you run this piece of code from.
+## Systemd Unit
+Systemd service using the previous example and [udevil][udevil]:
 ```ini
 notification-mount.service
 --------------------------
@@ -46,9 +72,9 @@ ExecStart=/usr/bin/devmon --no-mount --no-unmount --exec-on-drive "notification-
 [Install]
 WantedBy=default.target
 ```
-Fot this you will need to have the `notification-mount` in a folder that is part of the `$PATH`
+Fot this you will need to have the `notification-mount` in a folder that is part of the `PATH`
 
-**Note:** This should be the default `$PATH`. Alternatively you can set your modified `PATH` on the systemd environment like described [here](https://wiki.archlinux.org/index.php/Systemd/User#PATH). 
+**Note:** This should be the default `PATH`. Alternatively you can set your modified `PATH` on the systemd environment like described [here](https://wiki.archlinux.org/index.php/Systemd/User#PATH). 
 
 After that just enable and start the service:
 ```
