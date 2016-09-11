@@ -11,19 +11,18 @@ devmon --no-mount --no-unmount --exec-on-drive "./notification-mount -d %f"
 ```
 Note: You will need to change the path to the script, if you do not run `devmon` in the same folder as the script.
 
-
 ## Installation
 If you are not using **Arch** then you will need to copy or symlink the `notification-mount` file to somewhere that is in your `$PATH` (see below in the example for more info on the `PATH`).
 
 For how to install and start the system service see the [example](#systemd-unit) below.
 ### Arch Linux
-If you are using **Arch Linux** you can run `makepkg -sri` (click [here](https://wiki.archlinux.org/index.php/Makepkg) for more info on makepkg) in either the `contrib/notification-mount.aur` or the `contrib/notification-mount-git.aur` folder.
-This will automatically install this package and download all dependencies except for python-notify2, which you will need to build yourself from [here](https://aur.archlinux.org/packages/python-notify2/) because it is only in the AUR.
+If you are using **Arch Linux** either install [notification-mount][notification-mount] or [notification-mount-git][notification-mount-git] from the AUR.
 You should now also have a user systemd service which you can enable and start like this:
 ```
 systemctl --user enable notification-mount.service
 systemctl --user start notification-mount.service
 ```
+This service is the same as the one in the example below. 
 ### Requirements
 * Linux
 * python3
@@ -58,3 +57,5 @@ systemctl --user start notification-mount.service
 ```
 
 [udevil]: https://ignorantguru.github.io/udevil/
+[notification-mount]: https://aur.archlinux.org/packages/notification-mount
+[notification-mount-git]: https://aur.archlinux.org/packages/notification-mount-git
