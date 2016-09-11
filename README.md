@@ -39,7 +39,7 @@ For how to install and start the system service see the [example](#systemd-unit)
 ## Arch Linux
 If you are using **Arch Linux** either install [notification-mount][notification-mount] or [notification-mount-git][notification-mount-git] from the AUR.
 You should now also have a user systemd service which you can enable and start like this:
-```
+```bash
 systemctl --user enable notification-mount.service
 systemctl --user start notification-mount.service
 ```
@@ -77,7 +77,7 @@ Fot this you will need to have the `notification-mount` in a folder that is part
 **Note:** This should be the default `PATH`. Alternatively you can set your modified `PATH` on the systemd environment like described [here](https://wiki.archlinux.org/index.php/Systemd/User#PATH). 
 
 After that just enable and start the service:
-```
+```bash
 systemctl --user enable notification-mount.service
 systemctl --user start notification-mount.service
 ```
