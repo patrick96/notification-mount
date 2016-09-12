@@ -14,7 +14,7 @@ Table of Contents
   * [Table of Contents](#table-of-contents)
   * [Installation](#installation)
     * [Requirements](#requirements)
-    * [Non-Arch Systems](#non-arch-systems)
+    * [General](#general)
     * [Arch Linux](#arch-linux)
   * [Examples](#examples)
     * [Devmon Script](#devmon-script)
@@ -30,11 +30,15 @@ Installation
 * [python-notify2](https://pypi.python.org/pypi/notify2)
 * [udevil][udevil]
 
-## Non-Arch Systems
+## General
 
-If you are not using **Arch**, then you will need to copy or symlink the `notification-mount` file to somewhere that is in your `PATH` (see below in the systemd example for more info on wĥat you need to pay attention to when placing it somewhere in the `PATH`).
+There is a pip package [here](https://pypi.python.org/pypi/notification-mount) that you can install like this:
+```bash
+sudo pip install notification-mount
+```
+This will only install the `notification-mount` script but not the system service. For how to install and start the system service, see the [example](#systemd-unit) below.
 
-For how to install and start the system service see the [example](#systemd-unit) below.
+If you are using **Arch Linux**, I would highly recommend using the method described [below]("#arch-linux") since it already installs the systemd service.
 
 ## Arch Linux
 If you are using **Arch Linux** either install [notification-mount][notification-mount] or [notification-mount-git][notification-mount-git] from the AUR.
