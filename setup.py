@@ -3,7 +3,7 @@
 from distutils.core import setup
 
 package_name = 'notification-mount'
-version = '1.0.0'
+version = '1.0.1'
 
 setup(
         name = package_name,
