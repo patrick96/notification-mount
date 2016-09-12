@@ -2,8 +2,10 @@
 python setup.py sdist
 
 # Install dist package
-sudo pip install --no-binary notification-mount dist/notification-mount-1.0.7.tar.gz
+sudo pip install --upgrade --no-binary notification-mount dist/notification-mount-1.0.7.tar.gz
 
 # Upload to pypitest and sign
 python setup.py sdist upload -r pypitest --sign
 
+# Upload to pypi and sign
+python setup.py sdist upload --sign
